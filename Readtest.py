@@ -1,16 +1,24 @@
-__author__ = 'Berni'
+__author__ = 'Bernhard Schwertberger'
 
 import unittest
-from Read import Read
+from Model import Model
 
 #Methode zum Auslesen der Regeln.
 #Parameter bitte anpassen falls unzureichend oder falsch.
 #Test wird erfolgreich abgeschlossen wenn die Rückgabe nicht None war.
-class ReadTest(unittest.TestCase):
-    def testRead(self):
-        read = Read()
-        oidtuple = read.readRules(snmpEngine, routerip, mib)
-        self.assertIsNotNone(oidtuple)
+class Modeltest(unittest.TestCase):
+
+    def testGetAllData(self):
+        model = Model()
+        tuples = []
+        tuples = model.getAllData()
+        for x in tuples:
+            self.assertIsNotNone(tuples[x])
+
+    def testGetNext(self):
+        model = Model()
+        tuple = model.getNext()
+        self.assertIsNotNone(tuple)
 
 if __name__ == '__main__':
     unittest.main()
