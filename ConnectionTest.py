@@ -1,29 +1,42 @@
 from array import array
-from ControlConnect import ControlConnect
-from unittest.mock import MagicMock
+from unittest.mock import Mock
 
 __author__ = 'Bernhard Schwertberger'
 
 import unittest
 
-#Test der Rückgabe von der Connection Methoden
+# Test der Rückgabe von der Connection Methoden
 class ConnectionTest(unittest.TestCase):
-
     def test_connect(self):
-        con = Connection()
-        self.assertTrue(con.connect(ip, user, pw))
+        m = Mock()
+        m.method(1,2,3)
+        m.method.assert_called_with(1,2,3)
+
+    def test_connectFail(self):
+        m = Mock()
+        m.method(2,2,3)
+        m.method.assert_called_with(1,2,3)
 
     def test_disconnect(self):
-        con = Connection()
-        self.assertTrue(con.disconnect())
+        m = Mock(return_value=True)
+        self.assertTrue(m())
+
+    def test_disconnectFail(self):
+        m = Mock(return_value=False)
+        self.assertTrue(m())
 
     def test_gCurVer(self):
-        con = Connection()
-        m = MagicMock(return_value = none)
+        m = Mock()
+        m.version = "V2"
+        cversion = m.version
+        sversion = "V3"
+        self.assertEqual(sversion, cversion)
 
-
-        cversion = con.getCurrentVersion()
-        self.assertIsNotNOne(self,cversion)
+    def test_gCurVerRight(self):
+        m = Mock(return_value="V3")
+        sversion = "V3"
+        cversion = m()
+        self.assertEqual(sversion, cversion)
 
 if __name__ == '__main__':
     unittest.main()
