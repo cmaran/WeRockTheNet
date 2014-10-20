@@ -5,7 +5,7 @@ __author__ = 'Bernhard Schwertberger'
 
 import unittest
 
-# Test der Rückgabe von der Connection Methoden
+# Test der Rückgabe von der Connection Methoden vorzeitig mit m
 class ConnectionTest(unittest.TestCase):
     def test_connect(self):
         m = Mock()
