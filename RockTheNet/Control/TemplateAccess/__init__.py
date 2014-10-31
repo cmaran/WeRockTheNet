@@ -18,7 +18,7 @@ class TemplateAccess(FlaskView):
     def __init__(self):
         self.app.template_folder = '../../View/templates'
         self.app.static_folder = '../../View/static'
-        self.app.secret_key = b'\xa3\xb4!ItQU\xd9\xf7P\xd6\xbe=G_T\xa0=!\xfe\xf0\xc6\xf0\xc7'
+        self.app.secret_key = '\xa3\xb4!ItQU\xd9\xf7P\xd6\xbe=G_T\xa0=!\xfe\xf0\xc6\xf0\xc7'
         
     def checkSessions(self):
         logged_in = None
