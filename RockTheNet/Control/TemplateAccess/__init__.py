@@ -1,3 +1,4 @@
+import json
 from flask import Flask
 from flask import render_template
 from flask import session
@@ -78,7 +79,7 @@ class TemplateAccess(FlaskView):
         ip = session['ip']
         tableResult = '%s' % self.connection.getbulk(oidrules, community, ip, port)
         trafficResult = '%s' % self.connection.getbulk(oidtraffic, community, ip, port)
-        return render_template('overview.html', logged_in=self.checkSessions(), rules=tableResult, traffic=trafficResult)
+        return render_template('overview.html', logged_in=self.checkSessions(), rules=json.dumps(tableResult), traffic=json.dumps(trafficResult))
 
     def registerApp(self):
         self.register(self.app)

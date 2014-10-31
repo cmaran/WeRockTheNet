@@ -7,7 +7,7 @@
     <title>We Rock The Net</title>
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -24,7 +24,7 @@
 		
 		var tbody = document.getElementById('myTable').getElementsByTagName('tbody')[0];
 		
-		var rules = [1,2,3,4,5,6,7,8,9,10];
+		var rules = [1,2,3,4,5,6,7,8,9,10,11,12];
 		
 		tbody.innerHTML = "";
 		
@@ -39,19 +39,21 @@
 			var cell3 = row.insertCell(2);
 			var cell4 = row.insertCell(3);
 			var cell5 = row.insertCell(4);
+			var cell6 = row.insertCell(5);
+			var cell7 = row.insertCell(6);
+			var cell8 = row.insertCell(7);
+			var cell9 = row.insertCell(8);
+			var cell10 = row.insertCell(9);
+			var cell11 = row.insertCell(10);
+			var cell12 = row.insertCell(11);
+			var cell13 = row.insertCell(12);
+			var cell14 = row.insertCell(13);
+			var cell15 = row.insertCell(14);		
 			
-			var name = "test" + x;
-			var t2 = "test2";
-			var t3 = "test2";
-			var t4 = "test2";
+			
 			var traffic = '<Button id="' + x + '" class="btn btn-primary" onclick="printchart(); clicked=this.id; trafficclick();">Traffic</Button>';
 			
-			// Add some text to the new cells:
-			cell1.innerHTML = name;
-			cell2.innerHTML = t2;
-			cell3.innerHTML = t3;
-			cell4.innerHTML = t4;
-			cell5.innerHTML = traffic;
+			cell15.innerHTML = traffic;
 		}
 	}
 
@@ -148,6 +150,7 @@
 		
 		chname.innerHTML = "<h3>" + text + "</h3>";
 		
+		var b;
 	}
 	</script>
   </head>
@@ -174,11 +177,7 @@
             <table class="table table-striped" id="myTable">
 				<thead>
 					<tr>
-						<th>#</th>
-						<th>Header</th>
-						<th>Header</th>
-						<th>Header</th>
-						<th>Traffic</th>
+						<th>vsys</th><th>action</th><th>source-zone</th><th>name</th><th>status</th><th>dipid</th><th>destination zone</th><th>source address</th><th>id</th><th>destination address</th><th>fixport</th><th>service</th><th>servicename</th><th>nat</th><th>Traffic</th>
 					</tr>
 				</thead>
 			  
@@ -198,10 +197,13 @@
 		<div class="col-xs-2" id="chartname">
 		</div>
 	
+
+	
+	
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-	 <script src="js/canvasjs.min.js"></script> 
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+	 <script src="{{ url_for('static', filename='js/canvasjs.min.js') }}"></script> 
   </body>
 </html>
