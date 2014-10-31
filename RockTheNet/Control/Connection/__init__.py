@@ -25,3 +25,19 @@ class Connection:
         except socket.error: 
             return False
         
+    def get(self, oid, communityName, ipAddress, ipPort):
+        errorIndication, errorStatus, errorIndex, varBindTable = self.cmdGen.getCmd (
+            cmdgen.CommunityData('public', communityName),
+            cmdgen.UdpTransportTarget((ipAddress, ipPort)), oid
+        )
+        
+        return self.converter.convertData(errorIndication, errorStatus, errorIndex, varBindTable, 1)
+
+    def getbulk(self, oid, communityName, ipAddress, ipPort):
+        errorIndication, errorStatus, errorIndex, varBindTable = self.cmdGen.nextCmd (
+            cmdgen.CommunityData('public', communityName),
+            cmdgen.UdpTransportTarget((ipAddress, ipPort)), oid,
+            lexicographicMode = False, ignoreNonIncreasingOid = False, lookupNames = True
+        )
+
+        return self.converter.convertData(errorIndication, errorStatus, errorIndex, varBindTable, 0)
