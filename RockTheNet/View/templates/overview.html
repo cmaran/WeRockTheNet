@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -15,47 +15,9 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
 	
 	<script type="text/javascript">
 	var clicked = 0;
-	
-	function fillTable(){
-		
-		var tbody = document.getElementById('myTable').getElementsByTagName('tbody')[0];
-		
-		var rules = [1,2,3,4,5,6,7,8,9,10,11,12];
-		
-		tbody.innerHTML = "";
-		
-		for(x = rules.length; x>0; x--){
-			// Create an empty <tr> element and add it to the 1st position of the table:
-			var row = tbody.insertRow(0);
-
-			// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
-			var cell1 = row.insertCell(0);
-			cell1.id = "number" + x;
-			var cell2 = row.insertCell(1);
-			var cell3 = row.insertCell(2);
-			var cell4 = row.insertCell(3);
-			var cell5 = row.insertCell(4);
-			var cell6 = row.insertCell(5);
-			var cell7 = row.insertCell(6);
-			var cell8 = row.insertCell(7);
-			var cell9 = row.insertCell(8);
-			var cell10 = row.insertCell(9);
-			var cell11 = row.insertCell(10);
-			var cell12 = row.insertCell(11);
-			var cell13 = row.insertCell(12);
-			var cell14 = row.insertCell(13);
-			var cell15 = row.insertCell(14);		
-			
-			
-			var traffic = '<Button id="' + x + '" class="btn btn-primary" onclick="printchart(); clicked=this.id; trafficclick();">Traffic</Button>';
-			
-			cell15.innerHTML = traffic;
-		}
-	}
 
 	
 	function gochart() {
@@ -78,21 +40,19 @@
 
 		var xVal = 0;
 		var yVal = 100;	
-		var updateInterval = 100;
+		var updateInterval = 1000;
 		var dataLength = 100; // number of dataPoints visible at any point
 
-		var updateChart = function (count) {
-			count = count || 1;
-			// count is number of times loop runs to generate random dataPoints.
-			
-			for (var j = 0; j < count; j++) {	
-				yVal = yVal +  Math.round(3 + Math.random() *(-3-3));
-				dps.push({
-					x: xVal,
-					y: yVal
-				});
-				xVal++;
-			};
+		var updateChart = function () {
+
+            $.get("http://127.0.0.1:5000/trafficjson/" + clicked,
+                function(data) {
+                    dps.push({
+					    x: xVal++,
+					    y: data.bPS
+				    });
+                });
+
 			if (dps.length > dataLength)
 			{
 				dps.shift();				
@@ -178,6 +138,12 @@
 				<thead>
 					<tr>
 						<th>vsys</th><th>action</th><th>source-zone</th><th>name</th><th>status</th><th>dipid</th><th>destination zone</th><th>source address</th><th>id</th><th>destination address</th><th>fixport</th><th>service</th><th>servicename</th><th>nat</th><th>Traffic</th>
+                        {% for x in rules %}
+                            <tr>
+                            {% for y in x %}<td>{{ y }}</td>{% endfor %}
+                            <td><Button id="{{ loop.index - 1 }}" class="btn btn-primary" onclick="printchart(); clicked=this.id; trafficclick();">Traffic</Button></td>
+                            </tr>
+                        {% endfor %}
 					</tr>
 				</thead>
 			  

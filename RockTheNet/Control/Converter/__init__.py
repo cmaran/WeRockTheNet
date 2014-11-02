@@ -14,5 +14,5 @@ class Converter:
                     results = []
                     for varBindTableRow in varBindTable:
                         for oid, value in varBindTableRow:
-                            results.append('%s' % value)
+                            results.append(value)
                 return results
