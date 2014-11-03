@@ -113,18 +113,17 @@ class TemplateAccess(FlaskView):
 
     def parserRules(self, data):
         rv = []
-        for i in range(0,12):
+        for i in range(0,13):
             rv.append([])
-        for i in range(0,len(data),12):
+        for i in range(0,len(data),13):
             for j, x in enumerate(rv):
-                r = i/12
+                r = i/13
                 if r == 0 or r == 1 or r == 2 or r == 3 or r == 4 or r == 5 or r == 6 or r == 7 or r == 8 or r == 9 or r == 10 or r == 13:
                     x.append(data[i+j])
         return rv
 
     @route('/rules', methods=['GET'])
     def rules(self):
-        oidtraffic = '1.3.6.1.4.1.3224.10.2.1.6'
         oidrules = '1.3.6.1.4.1.3224.10.1'
         community = session['community']
         port = session['port']
@@ -145,6 +144,7 @@ class TemplateAccess(FlaskView):
         #trafficResult = '%s' % self.connection.getbulk(oidtraffic, community, ip, port)
         #return render_template('overview.html', logged_in=self.checkSessions(), rules=tableResult, traffic=trafficResult)
         bPS = int(trafficResult[rid])
+        #bPS = random.randint(1, 100)
         return Response(json.dumps({"bPS":bPS}), mimetype='application/json')
 
     def registerApp(self):
