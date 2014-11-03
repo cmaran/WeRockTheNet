@@ -15,107 +15,9 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-	
-	<script type="text/javascript">
-	var clicked = 0;
-
-	
-	function gochart() {
-
-		var dps = []; // dataPoints
-
-		var chart = new CanvasJS.Chart("chartContainer",{
-			title :{
-              text: "Traffic(Bytes/sec)"
-			},
-			axisY: {
-				includeZero: false
-			},			
-			data: [{
-				type: "stepLine",
-				markerSize: 0,
-				dataPoints: dps 
-			}]
-		});
-
-		var xVal = 0;
-		var yVal = 100;	
-		var updateInterval = 1000;
-		var dataLength = 100; // number of dataPoints visible at any point
-
-		var updateChart = function () {
-
-            $.get("http://127.0.0.1:5000/trafficjson/" + clicked,
-                function(data) {
-                    dps.push({
-					    x: xVal++,
-					    y: data.bPS
-				    });
-                });
-
-			if (dps.length > dataLength)
-			{
-				dps.shift();				
-			}
-			
-			chart.render();		
-
-		};
-		
-		var startChart = function (count) {
-			count = count || 1;
-			// count is number of times loop runs to generate random dataPoints.
-			
-			for (var j = 0; j < count; j++) {	
-				yVal = null;
-				dps.push({
-					x: xVal,
-					y: yVal
-				});
-				xVal++;
-			};
-			if (dps.length > dataLength)
-			{
-				dps.shift();				
-			}
-			
-			chart.render();		
-
-		};
-		
-		// generates first set of dataPoints
-		startChart(dataLength); 
-
-		// update chart after specified time. 
-		setInterval(function(){updateChart()}, updateInterval); 
-
-	}
-	
-	function printchart(){	
-	
-		var chartdiv = document.getElementById('cvs');
-		
-		chartdiv.innerHTML = "";
-		
-		chartdiv.innerHTML = '<div id="chartContainer" style="height: 300px; width:100%;">';
-		
-		gochart();
-	}
-	
-	function trafficclick(){
-		
-		var chname = document.getElementById("chartname");
-		
-		var text = document.getElementById("number" + clicked).innerHTML;
-		
-		chname.innerHTML = "<h3>" + text + "</h3>";
-		
-		var b;
-	}
-	</script>
   </head>
   <body>
-    <!-- Navigation -->
+     <!-- Navigation -->
     <nav class="navbar navbar-default" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -155,8 +57,8 @@
 		<h1 align="center">We rock the net</h1>
 	</div>
     <div>
-       <h3 align="center">Overview</h3>
-    </div>
+		<h3 align="center">Services</h3>
+	</div>
 	<div class="col-xs-2">
 	</div>
 	<div class="col-xs-8">
@@ -171,16 +73,14 @@
 
 		</div>
 		</div>
-		
-		<div class="table-responsive col-xs-12">
-            <table class="table table-striped" id="myTable">
+        <div class="table-responsive col-xs-12">
+            <table class="table table-striped" id="myTable2">
 				<thead>
 					<tr>
-						<th>id</th><th>vsys</th><th>src-zone</th><th>dst-zone</th><th>service</th><th>action</th><th>nat</th><th>fix port</th><th>dipId</th><th>auth</th><th>logEnable</th><th>countEnable</th><th>traffic</th>
-                        {% for x in rules %}
+						<th>id</th><th>name</th><th>category</th>
+                        {% for x in services %}
                             <tr>
                             {% for y in x %}<td>{{ y }}</td>{% endfor %}
-                            <td><Button id="{{ loop.index - 1 }}" class="btn btn-primary" onclick="printchart(); clicked=this.id; trafficclick();">Traffic</Button></td>
                             </tr>
                         {% endfor %}
 					</tr>
@@ -191,18 +91,7 @@
 				</tbody>
             </table>
 		</div>
-        </br>
 	</div>
-	
-		<div class="col-xs-2">
-		</div>
-		<div class="col-xs-8" id="cvs">
-
-		</div>
-		</div>
-		
-		<div class="col-xs-2" id="chartname">
-		</div>
 	
 
 	

@@ -71,14 +71,34 @@ class TemplateAccess(FlaskView):
         session.pop('community', None)
         return self.index()
 
+    def parserServices(self, data):
+        rv = []
+        for i in range(0,72):
+            rv.append([])
+        for i in range(0,len(data),72):
+            for j, x in enumerate(rv):
+                r = i/72
+                if r == 0 or r == 1 or r == 2:
+                    x.append(data[i+j])
+        return rv
+
+    @route('/services', methods=['GET'])
+    def services(self):
+        oidservices = '1.3.6.1.4.1.3224.13.1'
+        community = session['community']
+        port = session['port']
+        ip = session['ip']
+        serviceResult = self.connection.getbulk(oidservices, community, ip, port)
+        return render_template('services.html', logged_in=self.checkSessions(), services=self.parserServices(serviceResult))
+
     def parserRules(self, data):
         rv = []
-        for i in range(0,13):
+        for i in range(0,12):
             rv.append([])
-        for i in range(0,len(data),13):
+        for i in range(0,len(data),12):
             for j, x in enumerate(rv):
-                r = i/13
-                if r == 0 or r == 1 or r == 2 or r == 3 or r == 4 or r == 5 or r == 6 or r == 7 or r == 8 or r == 9 or r == 10 or r == 11 or r == 12 or r == 13:
+                r = i/12
+                if r == 0 or r == 1 or r == 2 or r == 3 or r == 4 or r == 5 or r == 6 or r == 7 or r == 8 or r == 9 or r == 10 or r == 13:
                     x.append(data[i+j])
         return rv
 

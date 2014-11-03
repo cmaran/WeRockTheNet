@@ -36,8 +36,11 @@
                 <ul class="nav navbar-nav">
                 	{% if logged_in %}
 	                    <li>
-	                        <a href="/rules">Firewall Rules</a>
+	                        <a href="/rules">Overview</a>
 	                    </li>
+                        <li>
+                            <a href="/services">Services</a>
+                        </li>
 	                    <li>
 	                        <a href="/logout">Logout</a>
 	                    </li>
@@ -69,7 +72,7 @@
                    		<form id="signin" class="form-signin" role="form" method="post">
                 			IP address <input type="text" name="ip" class="form-control" name="username" placeholder="for example: 10.0.104.66" value="10.0.100.10" required style="width:410px;">
                     		Port <input type="text" name="port" class="form-control" name="password" value="161" required style="width:410px;">
-                    		CommunityName <input type="text" name="community" class="form-control" name="communityName" required style="width:410px;">
+                    		CommunityName <input type="text" name="community" class="form-control" required style="width:410px;">
                     		<br>
                     		<button class="btn btn-lg btn-primary btn-block" type="submit" style="width:120px;">Login</button>
 	                 		{% if error %}
