@@ -71,6 +71,26 @@ class TemplateAccess(FlaskView):
         session.pop('community', None)
         return self.index()
 
+    def parserZones(self, data):
+        rv = []
+        for i in range(0,10):
+            rv.append([])
+        for i in range(0,len(data),10):
+            for j, x in enumerate(rv):
+                r = i/10
+                if r == 0 or r == 1 or r == 2 or r == 3 or r == 4:
+                    x.append(data[i+j])
+        return rv
+
+    @route('/zones', methods=['GET'])
+    def zones(self):
+        oidzones = '1.3.6.1.4.1.3224.8.1'
+        community = session['community']
+        port = session['port']
+        ip = session['ip']
+        zonesResult = self.connection.getbulk(oidzones, community, ip, port)
+        return render_template('zones.html', logged_in=self.checkSessions(), services=self.parserZones(zonesResult))
+
     def parserServices(self, data):
         rv = []
         for i in range(0,72):
